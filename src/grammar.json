@@ -3,16 +3,17 @@
   "word": "_WORD",
   "rules": {
     "start": {
-      "type": "REPEAT",
-      "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "SYMBOL",
-            "name": "program_definition"
-          }
-        ]
-      }
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "program_definition"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "copybook_definition"
+        }
+      ]
     },
     "_comment": {
       "type": "PATTERN",
@@ -69,6 +70,25 @@
             "content": {
               "type": "SYMBOL",
               "name": "end_program"
+            }
+          }
+        ]
+      }
+    },
+    "copybook_definition": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "data_description"
+          },
+          {
+            "type": "REPEAT1",
+            "content": {
+              "type": "STRING",
+              "value": "."
             }
           }
         ]
@@ -6933,7 +6953,7 @@
             "members": [
               {
                 "type": "SYMBOL",
-                "name": "_WORD"
+                "name": "WORD"
               },
               {
                 "type": "SYMBOL",
@@ -6975,7 +6995,7 @@
             "members": [
               {
                 "type": "SYMBOL",
-                "name": "_WORD"
+                "name": "WORD"
               },
               {
                 "type": "SYMBOL",
@@ -7161,6 +7181,10 @@
         {
           "type": "SYMBOL",
           "name": "next_sentence_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "execute_statement"
         }
       ]
     },
@@ -7246,6 +7270,14 @@
         {
           "type": "SYMBOL",
           "name": "END_UNSTRING"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "END_EXECUTE"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "END_EXEC"
         },
         {
           "type": "SYMBOL",
@@ -13563,7 +13595,7 @@
                 "members": [
                   {
                     "type": "SYMBOL",
-                    "name": "VARYING"
+                    "name": "_VARYING"
                   },
                   {
                     "type": "SYMBOL",
@@ -15366,6 +15398,56 @@
         }
       ]
     },
+    "execute_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "execute_header"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "execute_body"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "execute_end"
+        }
+      ]
+    },
+    "execute_header": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "EXEC"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "EXECUTE"
+        }
+      ]
+    },
+    "execute_body": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "SYMBOL",
+        "name": "WORD"
+      }
+    },
+    "execute_end": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "END_EXECUTE"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "END_EXEC"
+        }
+      ]
+    },
     "_simple_value": {
       "type": "CHOICE",
       "members": [
@@ -16724,6 +16806,14 @@
       "type": "PATTERN",
       "value": "[eE][nN][dD]-[wW][rR][iI][tT][eE]"
     },
+    "_END_EXECUTE": {
+      "type": "PATTERN",
+      "value": "[eE][nN][dD]-[eE][xX][eE][cC][uU][tT][eE]"
+    },
+    "_END_EXEC": {
+      "type": "PATTERN",
+      "value": "[eE][nN][dD]-[eE][xX][eE][cC]"
+    },
     "_ENTRY": {
       "type": "PATTERN",
       "value": "[eE][nN][tT][rR][yY]"
@@ -17305,6 +17395,14 @@
     "_NEXT": {
       "type": "PATTERN",
       "value": "[nN][eE][xX][tT]"
+    },
+    "_EXECUTE": {
+      "type": "PATTERN",
+      "value": "[eE][xX][eE][cC][uU][tT][eE]"
+    },
+    "_EXEC": {
+      "type": "PATTERN",
+      "value": "[eE][xX][eE][cC]"
     },
     "_NEXT_SENTENCE": {
       "type": "PATTERN",
@@ -18495,6 +18593,14 @@
       "type": "SYMBOL",
       "name": "_END_WRITE"
     },
+    "END_EXECUTE": {
+      "type": "SYMBOL",
+      "name": "_END_EXECUTE"
+    },
+    "END_EXEC": {
+      "type": "SYMBOL",
+      "name": "_END_EXEC"
+    },
     "ENVIRONMENT": {
       "type": "SYMBOL",
       "name": "_ENVIRONMENT"
@@ -18682,6 +18788,14 @@
     "NEXT": {
       "type": "SYMBOL",
       "name": "_NEXT"
+    },
+    "EXECUTE": {
+      "type": "SYMBOL",
+      "name": "_EXECUTE"
+    },
+    "EXEC": {
+      "type": "SYMBOL",
+      "name": "_EXEC"
     },
     "NO": {
       "type": "SYMBOL",

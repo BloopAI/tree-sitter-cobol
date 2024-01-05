@@ -1346,14 +1346,14 @@ module.exports = grammar({
     ),
 
     section_header: $ => seq(
-      field('name', choice($._WORD, $.integer)),
+      field('name', choice($.WORD, $.integer)),
       $._SECTION,
       optional($._LITERAL),
       '.'
     ),
 
     paragraph_header: $ => seq(
-      field('name', choice($._WORD, $.integer)),
+      field('name', choice($.WORD, $.integer)),
       '.'
     ),
 
@@ -2397,7 +2397,7 @@ module.exports = grammar({
       $._SEARCH,
       optional(field('all', $.ALL)),
       field('table_name', $.qualified_word),
-      field('varying', optional(seq($.VARYING, $._identifier)))
+      field('varying', optional(seq($._VARYING, $._identifier)))
     ),
 
     set_statement: $ => seq(
